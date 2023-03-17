@@ -14,14 +14,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vych.game.managers.resources.ResourcesManager;
+import com.vych.game.managers.resources.entities.MusicResource;
+import com.vych.game.managers.resources.entities.ResourceType;
+import com.vych.game.managers.resources.entities.SoundResource;
+import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.managers.resources.exceptions.CannotLoadResource;
+import com.vych.game.managers.resources.exceptions.CannotUnloadResource;
 
 import java.util.Iterator;
 
 public class MyFirstGdxGame extends ApplicationAdapter {
-	private Texture dropImage;
-	private Texture bucketImage;
-	private Sound dropSound;
-	private Music rainMusic;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 
@@ -41,12 +44,17 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		dropImage = new Texture(Gdx.files.internal("droplet.png"));
-		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+		ResourcesManager resourcesManager = ResourcesManager.getInstance();
+		try {
+			resourcesManager.loadResource("dropImage", "droplet.png", ResourceType.TEXTURE);
+			resourcesManager.loadResource("bucketImage", "bucket.png", ResourceType.TEXTURE);
+			resourcesManager.loadResource("dropSound", "drop.wav", ResourceType.SOUND);
+			resourcesManager.loadResource("rainMusic", "rain.mp3", ResourceType.MUSIC);
+		} catch (CannotLoadResource e) {
+			throw new RuntimeException(e);
+		}
 
-		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-
+		Music rainMusic = resourcesManager.getByName("rainMusic", MusicResource.class).getContentCasted();
 		rainMusic.setLooping(true);
 		rainMusic.play();
 
@@ -68,14 +76,15 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		ResourcesManager resourcesManager = ResourcesManager.getInstance();
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 		camera.update();
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(bucketImage, bucket.x, bucket.y);
+		batch.draw(resourcesManager.getByName("bucketImage", TextureResource.class).getContentCasted(), bucket.x, bucket.y);
 		for(Rectangle raindrop: raindrops) {
-			batch.draw(dropImage, raindrop.x, raindrop.y);
+			batch.draw(resourcesManager.getByName("dropImage", TextureResource.class).getContentCasted(), raindrop.x, raindrop.y);
 		}
 		batch.end();
 
@@ -98,6 +107,7 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
 
 			if(raindrop.overlaps(bucket)) {
+				Sound dropSound = resourcesManager.getByName("dropSound", SoundResource.class).getContentCasted();
 				dropSound.play();
 				iter.remove();
 			}
@@ -108,10 +118,16 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		dropImage.dispose();
-		bucketImage.dispose();
-		dropSound.dispose();
-		rainMusic.dispose();
+		ResourcesManager resourcesManager = ResourcesManager.getInstance();
+		try {
+			resourcesManager.unloadResource("dropImage");
+			resourcesManager.unloadResource("bucketImage");
+			resourcesManager.unloadResource("dropSound");
+			resourcesManager.unloadResource("rainMusic");
+		} catch (CannotUnloadResource e) {
+			throw new RuntimeException(e);
+		}
+
 		batch.dispose();
 	}
 }

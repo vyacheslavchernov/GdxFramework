@@ -3,7 +3,7 @@ package com.vych.game.managers.resources.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class TextureResource extends BasicResource{
+public class TextureResource extends BasicResource {
     @Override
     public Texture getContentCasted() {
         return (Texture) this.content;

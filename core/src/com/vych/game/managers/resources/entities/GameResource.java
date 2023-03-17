@@ -2,6 +2,9 @@ package com.vych.game.managers.resources.entities;
 
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * Интерфейс описывающий поведение игрового ресурса.
+ */
 public interface GameResource {
     public Disposable getContentRaw();
 

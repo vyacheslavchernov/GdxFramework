@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.resources.entities.TextureResource;
 
+/**
+ * Интерфейс описывающий поведение игровых объектов.
+ */
 public interface GameObject {
     public Long getId();
 
@@ -18,8 +21,6 @@ public interface GameObject {
     public TextureResource getTextureResource();
 
     public GameObject setTextureResource(TextureResource textureResource);
-
-    public void updateInstance();
 
     public void instanceRender(Batch batch);
 

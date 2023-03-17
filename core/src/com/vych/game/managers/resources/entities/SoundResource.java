@@ -3,7 +3,7 @@ package com.vych.game.managers.resources.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
-public class SoundResource extends BasicResource{
+public class SoundResource extends BasicResource {
     @Override
     public Sound getContentCasted() {
         return (Sound) this.content;

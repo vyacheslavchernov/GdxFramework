@@ -4,7 +4,12 @@ import com.badlogic.gdx.utils.Disposable;
 import com.vych.game.managers.resources.exceptions.UnloadedResourceUse;
 import com.vych.game.managers.resources.exceptions.WrongResourceType;
 
-public abstract class BasicResource implements GameResource{
+/**
+ * Класс реализующий базовое поведение всех игровых ресурсов. Все поддерживаемые типы ресурсов должны
+ * наследоваться от этого класса. По своей сути класс является обёрткой
+ * для более удобной организации ресурсов в менеджере.
+ */
+public abstract class BasicResource implements GameResource {
     Disposable content;
     String name;
     String path;

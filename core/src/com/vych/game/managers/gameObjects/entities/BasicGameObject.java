@@ -5,6 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.resources.entities.TextureResource;
 
+/**
+ * Базовая имплементация интерфейса игрового объекта. Содержит единый для всех объектов функционал.
+ * Все дополнительные классы игровых объектов следует наследовать от этого класса.
+ */
 public abstract class BasicGameObject implements GameObject {
     Long id;
     Rectangle bounds;
@@ -51,15 +55,14 @@ public abstract class BasicGameObject implements GameObject {
         return this;
     }
 
-    public void updateInstance() {
-        GameObjectsManager.getInstance().updateInstance(this);
-    }
-
     @Override
     public void selfDestruct() {
         GameObjectsManager.getInstance().destructById(this.id);
     }
 
+    /**
+     * При необходимости более сложного рендеринга, следует переопределять данный метод.
+     */
     @Override
     public void instanceRender(Batch batch) {
         batch.draw(textureResource.getContentCasted(), bounds.x, bounds.y);

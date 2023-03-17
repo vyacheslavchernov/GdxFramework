@@ -3,6 +3,10 @@ package com.vych.game.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Оперативное хранилище для игровых данных.
+ * Данные хранятся в стеше до окончания работы игры и нигде не сохраняются.
+ */
 public class Stash {
     private static Map<String, Object> stash = new HashMap<>();
 

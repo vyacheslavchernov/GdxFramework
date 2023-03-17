@@ -1,9 +1,11 @@
 package com.vych.game.managers.gameObjects.entities;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.renderer.SceneRenderer;
 
 /**
  * Базовая имплементация интерфейса игрового объекта. Содержит единый для всех объектов функционал.
@@ -13,6 +15,8 @@ public abstract class BasicGameObject implements GameObject {
     Long id;
     Rectangle bounds;
     TextureResource textureResource;
+    SceneRenderer renderer;
+    Screen screen;
 
     public BasicGameObject(Long id) {
         this.id = id;
@@ -66,5 +70,25 @@ public abstract class BasicGameObject implements GameObject {
     @Override
     public void instanceRender(Batch batch) {
         batch.draw(textureResource.getContentCasted(), bounds.x, bounds.y);
+    }
+
+    @Override
+    public void linkToRenderer(SceneRenderer renderer) {
+        this.renderer = renderer;
+    }
+
+    @Override
+    public SceneRenderer getLinkedRenderer() {
+        return this.renderer;
+    }
+
+    @Override
+    public void linkToScene(Screen screen) {
+        this.screen = screen;
+    }
+
+    @Override
+    public Screen getLinkedScene() {
+        return this.screen;
     }
 }

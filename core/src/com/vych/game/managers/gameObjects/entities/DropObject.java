@@ -57,7 +57,7 @@ public class DropObject extends BasicGameObject {
 
     private void createNewDrop() {
         try {
-            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class);
+            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.renderer, this.screen);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);

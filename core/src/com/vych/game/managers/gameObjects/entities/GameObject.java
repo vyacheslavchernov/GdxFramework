@@ -1,8 +1,10 @@
 package com.vych.game.managers.gameObjects.entities;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.renderer.SceneRenderer;
 
 /**
  * Интерфейс описывающий поведение игровых объектов.
@@ -29,4 +31,12 @@ public interface GameObject {
     public void instanceCreate();
 
     public void selfDestruct();
+
+    public void linkToRenderer(SceneRenderer renderer);
+
+    public SceneRenderer getLinkedRenderer();
+
+    public void linkToScene(Screen screen);
+
+    public Screen getLinkedScene();
 }

@@ -1,11 +1,12 @@
 package com.vych.game.managers.gameObjects;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vych.game.managers.gameObjects.entities.GameObject;
+import com.vych.game.renderer.SceneRenderer;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Менеджер игровых объектов ({@link GameObject}). Нужен для удобной организации игровых сущностей,
@@ -30,9 +31,11 @@ public class GameObjectsManager {
      * @param objectClass Класс создаваемого объекта.
      * @return Созданный объект.
      */
-    public <T extends GameObject> T instantiateGameObject(Class<T> objectClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public <T extends GameObject> T instantiateGameObject(Class<T> objectClass, SceneRenderer renderer, Screen screen) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Long id = TimeUtils.nanoTime();
         T obj = objectClass.getDeclaredConstructor(Long.class).newInstance(id);
+        obj.linkToRenderer(renderer);
+        obj.linkToScene(screen);
         this.gameObjects.put(id, obj);
         return objectClass.cast(obj);
     }
@@ -65,6 +68,18 @@ public class GameObjectsManager {
         return gameObjects;
     }
 
+    public List<GameObject> getObjectsByRenderer(SceneRenderer renderer) {
+        List<GameObject> ret = new ArrayList<>();
+
+        for (GameObject obj : gameObjects.values()) {
+            if (obj.getLinkedRenderer().equals(renderer)) {
+                ret.add(obj);
+            }
+        }
+
+        return ret;
+    }
+
     /**
      * Удаление объекта по id.
      *
@@ -72,5 +87,14 @@ public class GameObjectsManager {
      */
     public void destructById(Long id) {
         gameObjects.remove(id);
+    }
+
+    public void proceedStepInScene(Screen screen) {
+        Collection<GameObject> objects = new ArrayList<>(gameObjects.values());
+        for (GameObject obj : objects) {
+            if (obj.getLinkedScene().equals(screen)) {
+                obj.instanceStep();
+            }
+        }
     }
 }

@@ -3,7 +3,8 @@ package com.vych.game.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.vych.game.MyFirstGdxGame;
+import com.vych.game.GameScreen;
+import com.vych.game.SampleGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -17,6 +18,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new MyFirstGdxGame();
+                return new SampleGame();
         }
 }

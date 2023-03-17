@@ -6,14 +6,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vych.game.managers.gameObjects.entities.BucketObject;
+import com.vych.game.managers.gameObjects.entities.DropObject;
+import com.vych.game.managers.gameObjects.GameObjectsManager;
+import com.vych.game.managers.gameObjects.entities.GameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.MusicResource;
 import com.vych.game.managers.resources.entities.ResourceType;
@@ -22,25 +24,12 @@ import com.vych.game.managers.resources.entities.TextureResource;
 import com.vych.game.managers.resources.exceptions.CannotLoadResource;
 import com.vych.game.managers.resources.exceptions.CannotUnloadResource;
 
-import java.util.Iterator;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class MyFirstGdxGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-
-	private Rectangle bucket;
-	private Array<Rectangle> raindrops;
-	private long lastDropTime;
-
-	private void spawnRaindrop() {
-		Rectangle raindrop = new Rectangle();
-		raindrop.x = MathUtils.random(0, 800-64);
-		raindrop.y = 480;
-		raindrop.width = 64;
-		raindrop.height = 64;
-		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime();
-	}
 
 	@Override
 	public void create () {
@@ -63,57 +52,33 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
+		GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
+		try {
+			BucketObject bucketObject = gameObjectsManager.instantiateGameObject(BucketObject.class);
+			bucketObject.setCamera(camera);
 
-		bucket = new Rectangle();
-		bucket.x = 800f / 2 - 64f / 2;
-		bucket.y = 20;
-		bucket.width = 64;
-		bucket.height = 64;
-
-		raindrops = new Array<Rectangle>();
-		spawnRaindrop();
+			gameObjectsManager.instantiateGameObject(DropObject.class);
+		} catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
 	public void render () {
-		ResourcesManager resourcesManager = ResourcesManager.getInstance();
+		GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
+		List<GameObject> allObjects = new ArrayList<>(gameObjectsManager.getObjectsAll().values());
+
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 		camera.update();
 
 		batch.setProjectionMatrix(camera.combined);
+
 		batch.begin();
-		batch.draw(resourcesManager.getByName("bucketImage", TextureResource.class).getContentCasted(), bucket.x, bucket.y);
-		for(Rectangle raindrop: raindrops) {
-			batch.draw(resourcesManager.getByName("dropImage", TextureResource.class).getContentCasted(), raindrop.x, raindrop.y);
+		for (GameObject obj : allObjects) {
+			obj.instanceRender(batch);
+			obj.instanceStep();
 		}
 		batch.end();
-
-		if(Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(touchPos);
-			bucket.x = touchPos.x - 64f / 2;
-		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
-		if(bucket.x < 0) bucket.x = 0;
-		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
-
-		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
-
-		for (Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ) {
-			Rectangle raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-
-			if(raindrop.overlaps(bucket)) {
-				Sound dropSound = resourcesManager.getByName("dropSound", SoundResource.class).getContentCasted();
-				dropSound.play();
-				iter.remove();
-			}
-
-			if(raindrop.y + 64 < 0) iter.remove();
-		}
 	}
 	
 	@Override

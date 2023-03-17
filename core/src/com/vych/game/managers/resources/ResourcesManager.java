@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ResourcesManager {
     private static final ResourcesManager instance = new ResourcesManager();
-    private Map<String, GameResource> resources = new HashMap<>();
+    private Map<String, GameResource> resources;
 
     public ResourcesManager() {
         resources = new HashMap<>();

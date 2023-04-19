@@ -2,7 +2,7 @@ package com.vych.game.managers.gameObjects;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.vych.game.managers.gameObjects.entities.GameObject;
+import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.renderer.SceneRenderer;
 
 import java.lang.reflect.InvocationTargetException;

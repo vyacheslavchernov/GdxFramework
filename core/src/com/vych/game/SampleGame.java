@@ -4,7 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SampleGame extends Game {
-    public SpriteBatch batch;
+    private SpriteBatch batch;
+    private boolean pause = false;
 
     @Override
     public void create() {
@@ -20,7 +21,23 @@ public class SampleGame extends Game {
         batch.dispose();
     }
 
+    @Override
+    public void pause() {
+        super.pause();
+        this.pause = true;
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        this.pause = false;
+    }
+
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public boolean isPause() {
+        return pause;
     }
 }

@@ -3,10 +3,10 @@ package com.vych.game.renderer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
-import com.vych.game.managers.gameObjects.entities.GameObject;
+import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.MusicResource;
-import com.vych.game.managers.resources.entities.ResourceType;
+import com.vych.game.managers.resources.entities.core.ResourceType;
 import com.vych.game.managers.resources.exceptions.CannotLoadResource;
 import com.vych.game.managers.resources.exceptions.CannotUnloadResource;
 
@@ -24,10 +24,6 @@ public class GameScreenRenderer implements SceneRenderer {
         } catch (CannotLoadResource e) {
             throw new RuntimeException(e);
         }
-
-        Music rainMusic = resourcesManager.getByName("rainMusic", MusicResource.class).getContentCasted();
-        rainMusic.setLooping(true);
-        rainMusic.play();
     }
 
     @Override

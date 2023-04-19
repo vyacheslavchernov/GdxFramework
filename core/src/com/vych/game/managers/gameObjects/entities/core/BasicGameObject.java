@@ -1,4 +1,4 @@
-package com.vych.game.managers.gameObjects.entities;
+package com.vych.game.managers.gameObjects.entities.core;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,11 +12,11 @@ import com.vych.game.renderer.SceneRenderer;
  * Все дополнительные классы игровых объектов следует наследовать от этого класса.
  */
 public abstract class BasicGameObject implements GameObject {
-    Long id;
-    Rectangle bounds;
-    TextureResource textureResource;
-    SceneRenderer renderer;
-    Screen screen;
+    protected Long id;
+    protected Rectangle bounds;
+    protected TextureResource textureResource;
+    protected SceneRenderer renderer;
+    protected Screen screen;
 
     public BasicGameObject(Long id) {
         this.id = id;

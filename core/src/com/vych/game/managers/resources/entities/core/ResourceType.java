@@ -1,4 +1,4 @@
-package com.vych.game.managers.resources.entities;
+package com.vych.game.managers.resources.entities.core;
 
 public enum ResourceType {
     TEXTURE,

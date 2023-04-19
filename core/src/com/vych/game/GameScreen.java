@@ -1,12 +1,15 @@
 package com.vych.game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.BucketObject;
 import com.vych.game.managers.gameObjects.entities.DropObject;
+import com.vych.game.managers.resources.ResourcesManager;
+import com.vych.game.managers.resources.entities.MusicResource;
 import com.vych.game.renderer.GameScreenRenderer;
 import com.vych.game.renderer.SceneRenderer;
 
@@ -18,12 +21,19 @@ public class GameScreen implements Screen {
     private final SpriteBatch batch;
     private final SceneRenderer renderer;
 
+    private Music rainMusic;
+
     public GameScreen(final SampleGame game) {
         this.game = game;
         batch = game.getBatch();
 
         renderer = new GameScreenRenderer();
         renderer.loadAssets();
+
+        rainMusic = ResourcesManager.getInstance()
+                .getByName("rainMusic", MusicResource.class)
+                .getContentCasted();
+        rainMusic.setLooping(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -39,18 +49,20 @@ public class GameScreen implements Screen {
     }
 
     public void render(float delta) {
-        GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
+        if (!game.isPause()) {
+            GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
 
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.update();
+            ScreenUtils.clear(0, 0, 0.2f, 1);
+            camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
+            batch.setProjectionMatrix(camera.combined);
 
-        gameObjectsManager.proceedStepInScene(this);
+            gameObjectsManager.proceedStepInScene(this);
 
-        batch.begin();
-        renderer.renderScene(batch);
-        batch.end();
+            batch.begin();
+            renderer.renderScene(batch);
+            batch.end();
+        }
     }
 
     @Override
@@ -61,7 +73,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        rainMusic.play();
     }
 
     @Override
@@ -71,12 +83,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-
+        rainMusic.pause();
     }
 
     @Override
     public void resume() {
-
+        rainMusic.play();
     }
 
     @Override

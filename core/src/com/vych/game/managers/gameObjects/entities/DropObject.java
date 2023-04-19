@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
+import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.SoundResource;
 import com.vych.game.managers.resources.entities.TextureResource;

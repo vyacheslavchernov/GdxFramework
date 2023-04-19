@@ -1,6 +1,8 @@
 package com.vych.game.managers.resources;
 
 import com.vych.game.managers.resources.entities.*;
+import com.vych.game.managers.resources.entities.core.GameResource;
+import com.vych.game.managers.resources.entities.core.ResourceType;
 import com.vych.game.managers.resources.exceptions.CannotLoadResource;
 import com.vych.game.managers.resources.exceptions.CannotUnloadResource;
 import com.vych.game.managers.resources.exceptions.UnexpectedResourceType;

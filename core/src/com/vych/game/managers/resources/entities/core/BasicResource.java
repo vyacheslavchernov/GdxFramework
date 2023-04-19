@@ -1,4 +1,4 @@
-package com.vych.game.managers.resources.entities;
+package com.vych.game.managers.resources.entities.core;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.vych.game.managers.resources.exceptions.UnloadedResourceUse;
@@ -10,11 +10,11 @@ import com.vych.game.managers.resources.exceptions.WrongResourceType;
  * для более удобной организации ресурсов в менеджере.
  */
 public abstract class BasicResource implements GameResource {
-    Disposable content;
-    String name;
-    String path;
-    ResourceType type;
-    boolean loaded = false;
+    protected Disposable content;
+    protected String name;
+    protected String path;
+    protected ResourceType type;
+    protected boolean loaded = false;
 
     @Override
     public Disposable getContentRaw() {

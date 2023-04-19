@@ -1,4 +1,4 @@
-package com.vych.game.managers.gameObjects.entities;
+package com.vych.game.managers.gameObjects.entities.core;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;

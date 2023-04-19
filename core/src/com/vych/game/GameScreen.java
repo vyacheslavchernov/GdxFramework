@@ -1,27 +1,16 @@
 package com.vych.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.BucketObject;
 import com.vych.game.managers.gameObjects.entities.DropObject;
-import com.vych.game.managers.gameObjects.entities.GameObject;
-import com.vych.game.managers.resources.ResourcesManager;
-import com.vych.game.managers.resources.entities.MusicResource;
-import com.vych.game.managers.resources.entities.ResourceType;
-import com.vych.game.managers.resources.exceptions.CannotLoadResource;
-import com.vych.game.managers.resources.exceptions.CannotUnloadResource;
 import com.vych.game.renderer.GameScreenRenderer;
 import com.vych.game.renderer.SceneRenderer;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameScreen implements Screen {
     private final SampleGame game;
@@ -48,6 +37,7 @@ public class GameScreen implements Screen {
             throw new RuntimeException(e);
         }
     }
+
     public void render(float delta) {
         GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
 

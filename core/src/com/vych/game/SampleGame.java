@@ -2,6 +2,7 @@ package com.vych.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vych.game.screens.MenuScene;
 
 public class SampleGame extends Game {
     private SpriteBatch batch;
@@ -9,16 +10,18 @@ public class SampleGame extends Game {
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        this.setScreen(new GameScreen(this));
+        this.batch = new SpriteBatch();
+        this.setScreen(new MenuScene(this));
     }
 
+    @Override
     public void render() {
         super.render();
     }
 
+    @Override
     public void dispose() {
-        batch.dispose();
+        this.batch.dispose();
     }
 
     @Override
@@ -34,10 +37,10 @@ public class SampleGame extends Game {
     }
 
     public SpriteBatch getBatch() {
-        return batch;
+        return this.batch;
     }
 
     public boolean isPause() {
-        return pause;
+        return this.pause;
     }
 }

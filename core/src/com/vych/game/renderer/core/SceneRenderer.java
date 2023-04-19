@@ -1,4 +1,4 @@
-package com.vych.game.renderer;
+package com.vych.game.renderer.core;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 

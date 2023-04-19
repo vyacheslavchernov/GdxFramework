@@ -1,33 +1,38 @@
 package com.vych.game.managers.gameObjects.entities.core;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.resources.entities.TextureResource;
-import com.vych.game.renderer.SceneRenderer;
+import com.vych.game.renderer.core.SceneRenderer;
+import com.vych.game.screens.core.BasicScene;
 
 /**
- * Базовая имплементация интерфейса игрового объекта. Содержит единый для всех объектов функционал.
- * Все дополнительные классы игровых объектов следует наследовать от этого класса.
+ * Базовая имплементация интерфейса игрового объекта.
+ * Содержит единый для всех объектов функционал.
+ * Все дополнительные классы игровых объектов
+ * следует наследовать от этого класса.
  */
 public abstract class BasicGameObject implements GameObject {
     protected Long id;
     protected Rectangle bounds;
-    protected TextureResource textureResource;
+    protected TextureResource textureResource = null;
     protected SceneRenderer renderer;
-    protected Screen screen;
+    protected BasicScene scene;
 
     public BasicGameObject(Long id) {
         this.id = id;
-        this.bounds = new com.badlogic.gdx.math.Rectangle(0, 0, 64, 64);
+        this.textureResource = null;
+        this.bounds = new Rectangle(0, 0, 64, 64);
         instanceCreate();
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public BasicGameObject setId(Long id) {
         this.id = id;
         return this;
@@ -35,14 +40,16 @@ public abstract class BasicGameObject implements GameObject {
 
     @Override
     public Rectangle getBounds() {
-        return bounds;
+        return this.bounds;
     }
 
+    @Override
     public BasicGameObject setBounds(Rectangle bounds) {
         this.bounds = bounds;
         return this;
     }
 
+    @Override
     public BasicGameObject setBounds(int x, int y, int width, int height) {
         this.bounds = new Rectangle(x, y, width, height);
         return this;
@@ -50,7 +57,7 @@ public abstract class BasicGameObject implements GameObject {
 
     @Override
     public TextureResource getTextureResource() {
-        return textureResource;
+        return this.textureResource;
     }
 
     @Override
@@ -65,11 +72,45 @@ public abstract class BasicGameObject implements GameObject {
     }
 
     /**
-     * При необходимости более сложного рендеринга, следует переопределять данный метод.
+     * При необходимости более сложного рендеринга,
+     * следует переопределять данный метод.
      */
     @Override
     public void instanceRender(Batch batch) {
-        batch.draw(textureResource.getContentCasted(), bounds.x, bounds.y);
+        if (this.textureResource != null) {
+            batch.draw(
+                    this.textureResource.getContentCasted(),
+                    this.bounds.x,
+                    this.bounds.y
+            );
+        }
+    }
+
+    /**
+     * При необходимости отрисовки поверх всего остального,
+     * следует переопределять данный метод.
+     */
+    @Override
+    public void instanceRenderGUI(Batch batch) {
+
+    }
+
+    /**
+     * При необходимости наличия в объекте логики,
+     * следует переопределять данный метод.
+     */
+    @Override
+    public void instanceStep() {
+
+    }
+
+    /**
+     * При необходимости выполнения каких-либо
+     * операций в ходе создания объекта, следует переопределять данный метод.
+     */
+    @Override
+    public void instanceCreate() {
+
     }
 
     @Override
@@ -83,12 +124,12 @@ public abstract class BasicGameObject implements GameObject {
     }
 
     @Override
-    public void linkToScene(Screen screen) {
-        this.screen = screen;
+    public void linkToScene(BasicScene scene) {
+        this.scene = scene;
     }
 
     @Override
-    public Screen getLinkedScene() {
-        return this.screen;
+    public BasicScene getLinkedScene() {
+        return this.scene;
     }
 }

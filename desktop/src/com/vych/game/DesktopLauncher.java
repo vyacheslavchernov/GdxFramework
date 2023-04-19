@@ -2,15 +2,22 @@ package com.vych.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.vych.game.utils.PropertiesLoader;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+		PropertiesLoader propertiesLoader = PropertiesLoader.getInstance();
+
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
-		config.setTitle("Drop | Simple Tutorial Game");
-		config.setWindowedMode(800,480);
-		config.useVsync(true);
+		config.setForegroundFPS(propertiesLoader.getInt("game.config.desktop.targetFps"));
+		config.setTitle(propertiesLoader.getString("game.config.desktop.title"));
+		config.setWindowedMode(
+				propertiesLoader.getInt("game.config.desktop.w"),
+				propertiesLoader.getInt("game.config.desktop.h")
+		);
+		config.useVsync(propertiesLoader.getBool("game.config.desktop.vsync"));
+
 		new Lwjgl3Application(new SampleGame(), config);
 	}
 }

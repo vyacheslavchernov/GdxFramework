@@ -1,4 +1,4 @@
-package com.vych.game.managers.gameObjects.entities;
+package com.vych.game.managers.gameObjects.entities.gameScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

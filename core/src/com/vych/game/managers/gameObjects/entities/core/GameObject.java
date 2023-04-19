@@ -1,42 +1,44 @@
 package com.vych.game.managers.gameObjects.entities.core;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.resources.entities.TextureResource;
-import com.vych.game.renderer.SceneRenderer;
+import com.vych.game.renderer.core.SceneRenderer;
+import com.vych.game.screens.core.BasicScene;
 
 /**
  * Интерфейс описывающий поведение игровых объектов.
  */
 public interface GameObject {
-    public Long getId();
+    Long getId();
 
-    public GameObject setId(Long id);
+    GameObject setId(Long id);
 
-    public Rectangle getBounds();
+    Rectangle getBounds();
 
-    public GameObject setBounds(Rectangle bounds);
+    GameObject setBounds(Rectangle bounds);
 
-    public GameObject setBounds(int x, int y, int width, int height);
+    GameObject setBounds(int x, int y, int width, int height);
 
-    public TextureResource getTextureResource();
+    TextureResource getTextureResource();
 
-    public GameObject setTextureResource(TextureResource textureResource);
+    GameObject setTextureResource(TextureResource textureResource);
 
-    public void instanceRender(Batch batch);
+    void instanceRender(Batch batch);
 
-    public void instanceStep();
+    void instanceRenderGUI(Batch batch);
 
-    public void instanceCreate();
+    void instanceStep();
 
-    public void selfDestruct();
+    void instanceCreate();
 
-    public void linkToRenderer(SceneRenderer renderer);
+    void selfDestruct();
 
-    public SceneRenderer getLinkedRenderer();
+    void linkToRenderer(SceneRenderer renderer);
 
-    public void linkToScene(Screen screen);
+    SceneRenderer getLinkedRenderer();
 
-    public Screen getLinkedScene();
+    void linkToScene(BasicScene scene);
+
+    BasicScene getLinkedScene();
 }

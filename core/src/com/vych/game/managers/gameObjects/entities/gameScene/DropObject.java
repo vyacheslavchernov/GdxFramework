@@ -1,4 +1,4 @@
-package com.vych.game.managers.gameObjects.entities;
+package com.vych.game.managers.gameObjects.entities.gameScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -26,39 +26,52 @@ public class DropObject extends BasicGameObject {
 
     @Override
     public void instanceStep() {
-        if (TimeUtils.nanoTime() - (Long) Stash.get("lastDropTime") > 1000000000) {
+        float rainSpeed = (float) Stash.get("rainSpeed");
+        if (TimeUtils.nanoTime() - (Long) Stash.get("lastDropTime") > 1000000000 - rainSpeed) {
             createNewDrop();
         }
 
-        bounds.y -= 200 * Gdx.graphics.getDeltaTime();
+        this.bounds.y -= rainSpeed * Gdx.graphics.getDeltaTime();
 
-        BucketObject bucketObject = (BucketObject) GameObjectsManager.getInstance()
-                .getObjectsByClass(BucketObject.class).values().toArray()[0];
+        GameObjectsManager gom = GameObjectsManager.getInstance();
+        BucketObject bucketObject = (BucketObject) gom.getObjectsByClass(BucketObject.class).values().toArray()[0];
 
-        if (bounds.overlaps(bucketObject.getBounds())) {
+        if (this.bounds.overlaps(bucketObject.getBounds())) {
             Sound dropSound = ResourcesManager.getInstance().getByName("dropSound", SoundResource.class).getContentCasted();
             dropSound.play();
             createNewDrop();
+            GlobalHUDObject hud = (GlobalHUDObject) gom.getObjectsByClass(GlobalHUDObject.class).values().toArray()[0];
+            hud.incrementScore();
+            if (hud.getScore() % 10 == 0) {
+                Stash.add("rainSpeed", rainSpeed + 20);
+            }
             selfDestruct();
         }
 
-        if (bounds.y + 64 < 0) selfDestruct();
+        if (this.bounds.y + 64 < 0) {
+            createNewDrop();
+            selfDestruct();
+        }
     }
 
     @Override
     public void instanceCreate() {
-        bounds.x = MathUtils.random(0, 800 - 64);
-        bounds.y = 480;
-        bounds.width = 64;
-        bounds.height = 64;
+        this.bounds.x = MathUtils.random(0, 800 - 64);
+        this.bounds.y = 480;
+        this.bounds.width = 64;
+        this.bounds.height = 64;
         Stash.add("lastDropTime", TimeUtils.nanoTime());
 
-        textureResource = ResourcesManager.getInstance().getByName("dropImage", TextureResource.class);
+        if (Stash.get("rainSpeed") == null) {
+            Stash.add("rainSpeed", 200f);
+        }
+
+        this.textureResource = ResourcesManager.getInstance().getByName("dropImage", TextureResource.class);
     }
 
     private void createNewDrop() {
         try {
-            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.renderer, this.screen);
+            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.renderer, this.scene);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);

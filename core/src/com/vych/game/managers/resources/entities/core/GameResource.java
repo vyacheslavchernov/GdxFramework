@@ -6,25 +6,25 @@ import com.badlogic.gdx.utils.Disposable;
  * Интерфейс описывающий поведение игрового ресурса.
  */
 public interface GameResource {
-    public Disposable getContentRaw();
+    Disposable getContentRaw();
 
-    public Disposable getContentCasted();
+    Disposable getContentCasted();
 
-    public String getName();
+    String getName();
 
-    public GameResource setName(String name);
+    GameResource setName(String name);
 
-    public ResourceType getType();
+    ResourceType getType();
 
-    public GameResource setType(ResourceType type);
+    GameResource setType(ResourceType type);
 
-    public String getPath();
+    String getPath();
 
-    public GameResource setPath(String path);
+    GameResource setPath(String path);
 
-    public boolean isLoaded();
+    boolean isLoaded();
 
-    public GameResource load();
+    GameResource load();
 
     void checkResourceType(ResourceType type);
 }

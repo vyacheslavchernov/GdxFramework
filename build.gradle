@@ -11,8 +11,7 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         classpath 'org.gretty:gretty:3.0.7'
-
-
+        classpath group: 'org.mini2Dx', name: 'parcl', version: '1.8.0'
     }
 }
 
@@ -43,7 +42,9 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java-library"
-
+    apply plugin: "java"
+    apply plugin: "application"
+    apply plugin: "org.mini2Dx.parcl"
 
     dependencies {
         implementation project(":core")
@@ -53,22 +54,25 @@ project(":desktop") {
 
         implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
     }
-}
 
-project(":html") {
-    apply plugin: "java-library"
-    apply plugin: "gwt"
-    apply plugin: "war"
-    apply plugin: "org.gretty"
+    mainClassName = "com.vych.game.DesktopLauncher"
 
+    parcl {
+        exe {
+            exeName = "Drop"
+            withJre(System.getenv('JAVA_HOME'))
+        }
 
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        app {
+            appName = "Drop"
+            displayName = 'Drop'
+            identifier = 'com.vych.game.drop'
+            copyright = 'Copyright 2023 Vy'
+        }
 
-        implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
+        linux {
+            binName = "Drop"
+        }
     }
 }
 

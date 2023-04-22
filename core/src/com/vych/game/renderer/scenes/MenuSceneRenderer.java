@@ -14,19 +14,19 @@ public class MenuSceneRenderer implements SceneRenderer {
     private final SceneAsset[] assets = {
             new SceneAsset()
                     .setResourceName("defaultFont")
-                    .setResourceInternalPath("font.otf")
+                    .setResourceInternalPath("fonts/font.otf")
                     .setResourceType(ResourceType.FONT),
             new SceneAsset()
                     .setResourceName("buttonIdleImage")
-                    .setResourceInternalPath("button.bmp")
+                    .setResourceInternalPath("img/button.bmp")
                     .setResourceType(ResourceType.TEXTURE),
             new SceneAsset()
                     .setResourceName("buttonHoverImage")
-                    .setResourceInternalPath("button_hover.bmp")
+                    .setResourceInternalPath("img/button_hover.bmp")
                     .setResourceType(ResourceType.TEXTURE),
             new SceneAsset()
                     .setResourceName("buttonClickImage")
-                    .setResourceInternalPath("button_click.bmp")
+                    .setResourceInternalPath("img/button_click.bmp")
                     .setResourceType(ResourceType.TEXTURE)
     };
 

@@ -36,12 +36,12 @@ public class DropObject extends BasicGameObject {
 
         GameObjectsManager gom = GameObjectsManager.getInstance();
         BucketObject bucketObject = (BucketObject) gom.getObjectsByClass(BucketObject.class).values().toArray()[0];
+        GlobalHUDObject hud = (GlobalHUDObject) gom.getObjectsByClass(GlobalHUDObject.class).values().toArray()[0];
 
         if (this.bounds.overlaps(bucketObject.getBounds())) {
             Sound dropSound = ResourcesManager.getInstance().getByName("dropSound", SoundResource.class).getContentCasted();
             dropSound.play();
             createNewDrop();
-            GlobalHUDObject hud = (GlobalHUDObject) gom.getObjectsByClass(GlobalHUDObject.class).values().toArray()[0];
             hud.incrementScore();
             if (hud.getScore() % 10 == 0) {
                 Stash.add("rainSpeed", rainSpeed + 20);
@@ -50,6 +50,7 @@ public class DropObject extends BasicGameObject {
         }
 
         if (this.bounds.y + 64 < 0) {
+            hud.incrementLooses();
             createNewDrop();
             selfDestruct();
         }

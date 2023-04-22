@@ -1,6 +1,5 @@
 package com.vych.game.scenes;
 
-import com.vych.game.SampleGame;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.menuScene.MenuGUIObject;
 import com.vych.game.renderer.scenes.MenuSceneRenderer;
@@ -10,8 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MenuScene extends BasicScene {
 
-    public MenuScene(SampleGame game) {
-        super(game, MenuSceneRenderer.class);
+    public MenuScene(String name) {
+        super(MenuSceneRenderer.class, name);
 
         this.clearColor = new float[]{0, 0.2f, 0, 1};
 

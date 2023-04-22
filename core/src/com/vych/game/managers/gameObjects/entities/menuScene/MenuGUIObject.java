@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.managers.scenes.SceneManager;
 import com.vych.game.renderer.core.gui.GUIHandler;
 import com.vych.game.renderer.core.gui.GUIListener;
 import com.vych.game.renderer.core.gui.components.GUIButtonComponent;
@@ -49,7 +50,8 @@ public class MenuGUIObject extends BasicGameObject {
                         .setOnClick(new GUIListener() {
                             @Override
                             public void onEvent(BasicScene scene) {
-                                scene.getGame().setScreen(new GameScene(scene.getGame()));
+                                SceneManager sm = SceneManager.getInstance();
+                                sm.switchScene(sm.loadScene("gameScene", GameScene.class), false);
                             }
                         })
                         .setText("PLAY")
@@ -79,7 +81,8 @@ public class MenuGUIObject extends BasicGameObject {
     @Override
     public void instanceStep() {
         if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
-            this.scene.getGame().setScreen(new GameScene(this.scene.getGame()));
+            SceneManager sm = SceneManager.getInstance();
+            sm.switchScene(sm.loadScene("gameScene", GameScene.class), false);
         }
     }
 

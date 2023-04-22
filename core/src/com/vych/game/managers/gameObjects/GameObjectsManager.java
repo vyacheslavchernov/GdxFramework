@@ -1,6 +1,5 @@
 package com.vych.game.managers.gameObjects;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.renderer.core.SceneRenderer;
@@ -88,11 +87,24 @@ public class GameObjectsManager {
         this.gameObjects.remove(id);
     }
 
-    public void proceedStepInScene(Screen screen) {
+    public void destructByScene(BasicScene scene) {
         Collection<GameObject> objects = new ArrayList<>(this.gameObjects.values());
         for (GameObject obj : objects) {
-            if (obj.getLinkedScene().equals(screen)) {
+            if (obj.getLinkedScene().equals(scene)) {
+                this.gameObjects.remove(obj.getId());
+            }
+        }
+
+    }
+
+    public void proceedStepInScene(BasicScene scene) {
+        Collection<GameObject> objects = new ArrayList<>(this.gameObjects.values());
+        for (GameObject obj : objects) {
+            if (obj.getLinkedScene().equals(scene)) {
                 obj.instanceStep();
+                if (scene.isDisposed()) {
+                    return;
+                }
             }
         }
     }

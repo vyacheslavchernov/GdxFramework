@@ -17,10 +17,13 @@ public abstract class BasicScene implements Screen {
     protected SpriteBatch batch;
     protected SceneRenderer renderer;
     protected float[] clearColor = {0, 0, 0, 1};
+    protected String name;
+    protected boolean disposed;
 
-    public BasicScene(SampleGame game, Class<? extends SceneRenderer> rendererClass) {
-        this.game = game;
+    public BasicScene(Class<? extends SceneRenderer> rendererClass, String name) {
+        this.game = SampleGame.getInstance();
         this.batch = game.getBatch();
+        this.name = name;
 
         try {
             this.renderer = rendererClass.getDeclaredConstructor().newInstance();
@@ -38,15 +41,12 @@ public abstract class BasicScene implements Screen {
                 propertiesLoader.getInt("game.config.desktop.w"),
                 propertiesLoader.getInt("game.config.desktop.h")
         );
+
+        this.disposed = false;
     }
 
     public SampleGame getGame() {
         return this.game;
-    }
-
-    public BasicScene setGame(SampleGame game) {
-        this.game = game;
-        return this;
     }
 
     public OrthographicCamera getCamera() {
@@ -76,6 +76,14 @@ public abstract class BasicScene implements Screen {
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isDisposed() {
+        return disposed;
+    }
+
     @Override
     public void render(float delta) {
         if (!this.game.isPause()) {
@@ -94,16 +102,19 @@ public abstract class BasicScene implements Screen {
 
             gameObjectsManager.proceedStepInScene(this);
 
-            this.batch.begin();
-            this.renderer.renderScene(this.batch);
-            this.batch.end();
+            if (!this.disposed) {
+                this.batch.begin();
+                this.renderer.renderScene(this.batch);
+                this.batch.end();
+            }
         }
     }
 
     @Override
     public void dispose() {
         this.renderer.unloadAssets();
-        this.batch.dispose();
+        GameObjectsManager.getInstance().destructByScene(this);
+        this.disposed = true;
     }
 
     @Override

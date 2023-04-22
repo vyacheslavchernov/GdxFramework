@@ -2,7 +2,7 @@ package com.vych.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.vych.game.screens.MenuScene;
+import com.vych.game.scenes.MenuScene;
 
 public class SampleGame extends Game {
     private SpriteBatch batch;

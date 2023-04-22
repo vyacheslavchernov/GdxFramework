@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.renderer.core.SceneRenderer;
-import com.vych.game.screens.core.BasicScene;
+import com.vych.game.scenes.core.BasicScene;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -32,11 +32,9 @@ public class GameObjectsManager {
      * @param objectClass Класс создаваемого объекта.
      * @return Созданный объект.
      */
-    public <T extends GameObject> T instantiateGameObject(Class<T> objectClass, SceneRenderer renderer, BasicScene scene) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public <T extends GameObject> T instantiateGameObject(Class<T> objectClass, BasicScene scene) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Long id = TimeUtils.nanoTime();
-        T obj = objectClass.getDeclaredConstructor(Long.class).newInstance(id);
-        obj.linkToRenderer(renderer);
-        obj.linkToScene(scene);
+        T obj = objectClass.getDeclaredConstructor(Long.class, BasicScene.class).newInstance(id, scene);
         this.gameObjects.put(id, obj);
         return objectClass.cast(obj);
     }
@@ -73,7 +71,7 @@ public class GameObjectsManager {
         List<GameObject> ret = new ArrayList<>();
 
         for (GameObject obj : this.gameObjects.values()) {
-            if (obj.getLinkedRenderer().equals(renderer)) {
+            if (obj.getLinkedScene().getRenderer().equals(renderer)) {
                 ret.add(obj);
             }
         }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.scenes.core.BasicScene;
 
 /**
  * Класс игрового объекта "Ведро".
@@ -16,8 +17,8 @@ import com.vych.game.managers.resources.entities.TextureResource;
 public class BucketObject extends BasicGameObject {
     private OrthographicCamera camera;
 
-    public BucketObject(Long id) {
-        super(id);
+    public BucketObject(Long id, BasicScene scene) {
+        super(id, scene);
     }
 
     public OrthographicCamera getCamera() {

@@ -5,14 +5,15 @@ import com.badlogic.gdx.utils.Align;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.renderer.core.gui.GUIHandler;
 import com.vych.game.renderer.core.gui.components.GUITextComponent;
+import com.vych.game.scenes.core.BasicScene;
 
 public class GlobalHUDObject extends BasicGameObject {
     private GUIHandler guiHandler;
 
     private int score = 0;
 
-    public GlobalHUDObject(Long id) {
-        super(id);
+    public GlobalHUDObject(Long id, BasicScene scene) {
+        super(id, scene);
     }
 
     @Override
@@ -24,8 +25,8 @@ public class GlobalHUDObject extends BasicGameObject {
                         .setHalign(Align.center)
                         .setFontName("defaultFont")
                         .setText("Score")
-                        .setX(800f / 2)
-                        .setY(480 - 20)
+                        .setX(400)
+                        .setY(460)
         );
     }
 

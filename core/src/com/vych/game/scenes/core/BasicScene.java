@@ -1,4 +1,4 @@
-package com.vych.game.screens.core;
+package com.vych.game.scenes.core;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -113,12 +113,11 @@ public abstract class BasicScene implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        this.camera.setToOrtho(false, width, height);
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Align;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.FontResource;
 import com.vych.game.renderer.core.gui.BasicGUIComponent;
-import com.vych.game.screens.core.BasicScene;
+import com.vych.game.scenes.core.BasicScene;
 
 public class GUITextComponent extends BasicGUIComponent {
     private int halign;

@@ -15,7 +15,19 @@ public class MenuSceneRenderer implements SceneRenderer {
             new SceneAsset()
                     .setResourceName("defaultFont")
                     .setResourceInternalPath("font.otf")
-                    .setResourceType(ResourceType.FONT)
+                    .setResourceType(ResourceType.FONT),
+            new SceneAsset()
+                    .setResourceName("buttonIdleImage")
+                    .setResourceInternalPath("button.bmp")
+                    .setResourceType(ResourceType.TEXTURE),
+            new SceneAsset()
+                    .setResourceName("buttonHoverImage")
+                    .setResourceInternalPath("button_hover.bmp")
+                    .setResourceType(ResourceType.TEXTURE),
+            new SceneAsset()
+                    .setResourceName("buttonClickImage")
+                    .setResourceInternalPath("button_click.bmp")
+                    .setResourceType(ResourceType.TEXTURE)
     };
 
     @Override

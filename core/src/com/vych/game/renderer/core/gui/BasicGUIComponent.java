@@ -1,6 +1,6 @@
 package com.vych.game.renderer.core.gui;
 
-import com.vych.game.screens.core.BasicScene;
+import com.vych.game.scenes.core.BasicScene;
 
 public abstract class BasicGUIComponent implements GUIComponent {
     protected String name;

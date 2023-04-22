@@ -33,14 +33,8 @@ public class GUIHandler {
     public void renderComponents(Batch batch) {
         Collection<GUIComponent> components = new ArrayList<>(this.componentsMap.values());
         for (GUIComponent component : components) {
-            component.render(batch);
-        }
-    }
-
-    public void updateComponents() {
-        Collection<GUIComponent> components = new ArrayList<>(this.componentsMap.values());
-        for (GUIComponent component : components) {
             component.update();
+            component.render(batch);
         }
     }
 }

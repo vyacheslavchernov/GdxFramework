@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.resources.entities.TextureResource;
-import com.vych.game.renderer.core.SceneRenderer;
-import com.vych.game.screens.core.BasicScene;
+import com.vych.game.scenes.core.BasicScene;
 
 /**
  * Базовая имплементация интерфейса игрового объекта.
@@ -17,11 +16,11 @@ public abstract class BasicGameObject implements GameObject {
     protected Long id;
     protected Rectangle bounds;
     protected TextureResource textureResource = null;
-    protected SceneRenderer renderer;
     protected BasicScene scene;
 
-    public BasicGameObject(Long id) {
+    public BasicGameObject(Long id, BasicScene scene) {
         this.id = id;
+        this.scene = scene;
         this.textureResource = null;
         this.bounds = new Rectangle(0, 0, 64, 64);
         instanceCreate();
@@ -64,6 +63,11 @@ public abstract class BasicGameObject implements GameObject {
     public BasicGameObject setTextureResource(TextureResource textureResource) {
         this.textureResource = textureResource;
         return this;
+    }
+
+    @Override
+    public BasicScene getLinkedScene() {
+        return this.scene;
     }
 
     @Override
@@ -111,25 +115,5 @@ public abstract class BasicGameObject implements GameObject {
     @Override
     public void instanceCreate() {
 
-    }
-
-    @Override
-    public void linkToRenderer(SceneRenderer renderer) {
-        this.renderer = renderer;
-    }
-
-    @Override
-    public SceneRenderer getLinkedRenderer() {
-        return this.renderer;
-    }
-
-    @Override
-    public void linkToScene(BasicScene scene) {
-        this.scene = scene;
-    }
-
-    @Override
-    public BasicScene getLinkedScene() {
-        return this.scene;
     }
 }

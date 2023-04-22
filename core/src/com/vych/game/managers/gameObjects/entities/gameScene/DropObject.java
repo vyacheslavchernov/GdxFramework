@@ -9,6 +9,7 @@ import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.SoundResource;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.scenes.core.BasicScene;
 import com.vych.game.utils.Stash;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +21,8 @@ import java.lang.reflect.InvocationTargetException;
  * С определённым интервалом создаётся новая капля.
  */
 public class DropObject extends BasicGameObject {
-    public DropObject(Long id) {
-        super(id);
+    public DropObject(Long id, BasicScene scene) {
+        super(id, scene);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class DropObject extends BasicGameObject {
 
     private void createNewDrop() {
         try {
-            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.renderer, this.scene);
+            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.scene);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);

@@ -4,7 +4,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class PropertiesLoader {
-    private static final String PROPERTIES_FILENAME = "application.properties";
+    private static final String PROPERTIES_FILENAME = "assets/config/application.properties";
     private static PropertiesLoader instance = null;
     private final PropertiesConfiguration config;
 

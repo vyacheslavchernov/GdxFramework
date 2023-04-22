@@ -14,27 +14,27 @@ public class GameSceneRenderer implements SceneRenderer {
     private final SceneAsset[] assets = {
             new SceneAsset()
                     .setResourceName("dropImage")
-                    .setResourceInternalPath("droplet.png")
+                    .setResourceInternalPath("img/droplet.png")
                     .setResourceType(ResourceType.TEXTURE),
 
             new SceneAsset()
                     .setResourceName("bucketImage")
-                    .setResourceInternalPath("bucket.png")
+                    .setResourceInternalPath("img/bucket.png")
                     .setResourceType(ResourceType.TEXTURE),
 
             new SceneAsset()
                     .setResourceName("dropSound")
-                    .setResourceInternalPath("drop.wav")
+                    .setResourceInternalPath("snd/drop.wav")
                     .setResourceType(ResourceType.SOUND),
 
             new SceneAsset()
                     .setResourceName("rainMusic")
-                    .setResourceInternalPath("rain.mp3")
+                    .setResourceInternalPath("snd/rain.mp3")
                     .setResourceType(ResourceType.MUSIC),
 
             new SceneAsset()
                     .setResourceName("defaultFont")
-                    .setResourceInternalPath("font.otf")
+                    .setResourceInternalPath("fonts/font.otf")
                     .setResourceType(ResourceType.FONT)
     };
 

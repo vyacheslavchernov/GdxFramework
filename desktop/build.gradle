@@ -1,3 +1,5 @@
+plugins { id 'org.beryx.runtime' version '1.8.4' }
+
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
@@ -7,7 +9,7 @@ project.ext.assetsDir = new File("../assets")
 
 import org.gradle.internal.os.OperatingSystem
 
-task run(dependsOn: classes, type: JavaExec) {
+task runGame(dependsOn: classes, type: JavaExec) {
     mainClass = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
@@ -41,6 +43,12 @@ task dist(type: Jar) {
     with jar
 }
 
+tasks.register('bundlingAssets', Copy) {
+    from "../assets"
+    into "$buildDir/windows/assets/"
+}
+
+bundleNative.finalizedBy('bundlingAssets')
 
 dist.dependsOn classes
 

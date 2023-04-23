@@ -10,7 +10,6 @@ import com.vych.game.scenes.core.BasicScene;
 
 public class GlobalHUDObject extends BasicGameObject {
     private GUIHandler guiHandler;
-
     private int score = 0;
     private int looses = 0;
 
@@ -68,7 +67,7 @@ public class GlobalHUDObject extends BasicGameObject {
     public void incrementLooses() {
         this.looses++;
         if (this.looses == 3) {
-            SceneManager.getInstance().switchScene("menu", true);
+            SceneManager.getInstance().switchScene("startup", true);
         }
     }
 }

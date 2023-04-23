@@ -1,5 +1,5 @@
 buildscript {
-    
+
 
     repositories {
         mavenLocal()
@@ -11,17 +11,18 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         classpath 'org.gretty:gretty:3.0.7'
-        
-
+        classpath 'com.github.johnrengelman:shadow:8.1.1'
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: "java-library"
 
-    version = '1.0'
+    version = '0.0.0'
     ext {
-        appName = "My First GDX Game"
+        appName = "GDX Framework"
         gdxVersion = '1.11.0'
         roboVMVersion = '2.3.16'
         box2DLightsVersion = '1.5'
@@ -42,31 +43,17 @@ allprojects {
 }
 
 project(":desktop") {
-    apply plugin: "java-library"
-
+    apply plugin: "java"
+    apply plugin: "application"
 
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
-}
 
-project(":html") {
-    apply plugin: "java-library"
-    apply plugin: "gwt"
-    apply plugin: "war"
-    apply plugin: "org.gretty"
-
-
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        
-    }
+    mainClassName = "com.vych.game.DesktopLauncher"
 }
 
 project(":core") {
@@ -75,6 +62,8 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+        implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
     }
 }

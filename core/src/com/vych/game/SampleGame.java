@@ -8,16 +8,27 @@ import com.vych.game.scenes.core.BasicScene;
 
 //TODO: По максимуму заюзать этот объект как синглтон.
 // Убрать его из полей других объектов. Все операции с ним сделать через SampleGame.getInstance()
+//
+//TODO: Класс сейчас(не знаю как будет дальше) не используется ни для чего, кроме переключения сцен и инициализации приложения
+// Может сделать его вместо синглтона полем SceneManager?
 public class SampleGame extends Game {
     private static SampleGame instance;
+    private static Class<? extends BasicScene> startupScene;
     private SpriteBatch batch;
     private boolean pause = false;
 
     public static SampleGame getInstance() {
         if (instance == null) {
+            if (startupScene == null) {
+                throw new RuntimeException("Попытка инициализировать объект игры без установки начальной сцены");
+            }
             instance = new SampleGame();
         }
         return instance;
+    }
+
+    public static void setStartupScene(Class<? extends BasicScene> startupScene) {
+        SampleGame.startupScene = startupScene;
     }
 
     @Override
@@ -25,7 +36,7 @@ public class SampleGame extends Game {
         this.batch = new SpriteBatch();
 
         SceneManager sm = SceneManager.getInstance();
-        BasicScene startupScene = sm.loadScene("menu", MenuScene.class);
+        BasicScene startupScene = sm.loadScene("startup", SampleGame.startupScene);
         sm.setCurrentScene(startupScene);
         this.setScreen(startupScene);
     }

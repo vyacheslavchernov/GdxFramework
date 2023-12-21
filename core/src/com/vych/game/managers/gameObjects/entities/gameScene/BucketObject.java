@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.TextureResource;
+import com.vych.game.managers.resources.entities.core.ResourceType;
+import com.vych.game.renderer.core.SceneAsset;
 import com.vych.game.scenes.core.BasicScene;
 
 /**
@@ -53,5 +55,12 @@ public class BucketObject extends BasicGameObject {
         bounds.height = 64;
 
         textureResource = ResourcesManager.getInstance().getByName("bucketImage", TextureResource.class);
+
+        scene.getRenderer().loadAssets(
+                new SceneAsset()
+                        .setResourceName("test")
+                        .setResourceType(ResourceType.TEXTURE)
+                        .setResourceInternalPath("img/droplet.png")
+        );
     }
 }

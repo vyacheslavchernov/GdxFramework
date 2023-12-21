@@ -5,19 +5,47 @@ import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BasicSceneRenderer implements SceneRenderer {
+    protected List<SceneAsset> assets;
+    protected ResourcesManager resourcesManager;
 
-    protected void loadAssets(SceneAsset[] assets) {
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
+    public BasicSceneRenderer() {
+        resourcesManager = ResourcesManager.getInstance();
+    }
+
+    @Override
+    public void loadAssets() {
         for (SceneAsset asset : assets) {
             resourcesManager.loadResource(asset);
         }
     }
 
-    protected void unloadAssets(SceneAsset[] assets) {
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
+    @Override
+    public void loadAssets(SceneAsset asset) {
+        assets.add(asset);
+        reloadAssets();
+    }
+
+    @Override
+    public void loadAssets(List<SceneAsset> assetList) {
+        assets.addAll(assetList);
+        reloadAssets();
+    }
+
+    private void reloadAssets() {
+        for (SceneAsset asset : assets) {
+            if (!resourcesManager.isResourceExist(asset.getResourceName())) {
+                resourcesManager.loadResource(asset);
+            }
+        }
+    }
+
+    @Override
+    public void unloadAssets() {
         for (SceneAsset asset : assets) {
             resourcesManager.unloadResource(asset);
         }

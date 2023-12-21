@@ -138,4 +138,8 @@ public class ResourcesManager {
 
         return ret;
     }
+
+    public boolean isResourceExist(String resourceName) {
+        return !(this.resources.get(resourceName) == null);
+    }
 }

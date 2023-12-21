@@ -20,7 +20,7 @@ allprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: "java-library"
 
-    version = '0.0.0'
+    version = '0.0.1'
     ext {
         appName = "GDX Framework"
         gdxVersion = '1.11.0'

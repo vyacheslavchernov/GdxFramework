@@ -1,6 +1,7 @@
 package com.vych.game.managers.scenes;
 
 import com.vych.game.SampleGame;
+import com.vych.game.context.Component;
 import com.vych.game.managers.scenes.exceptions.IllegalSceneName;
 import com.vych.game.managers.scenes.exceptions.UnloadedSceneUse;
 import com.vych.game.scenes.core.BasicScene;
@@ -9,20 +10,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class SceneManager {
-    private static SceneManager instance = new SceneManager();
-
     private Map<String, BasicScene> scenes;
 
     private BasicScene currentScene;
 
     public SceneManager() {
         this.scenes = new HashMap<>();
-
-    }
-
-    public static SceneManager getInstance() {
-        return instance;
     }
 
     public BasicScene getCurrentScene() {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.vych.game.SampleGame;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.renderer.core.SceneRenderer;
 import com.vych.game.utils.PropertiesLoader;
@@ -33,7 +34,7 @@ public abstract class BasicScene implements Screen {
         }
         this.renderer.loadAssets();
 
-        PropertiesLoader propertiesLoader = PropertiesLoader.getInstance();
+        PropertiesLoader propertiesLoader = ComponentsContext.getComponent(PropertiesLoader.class);
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(
@@ -87,7 +88,7 @@ public abstract class BasicScene implements Screen {
     @Override
     public void render(float delta) {
         if (!this.game.isPause()) {
-            GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
+            GameObjectsManager gameObjectsManager = ComponentsContext.getComponent(GameObjectsManager.class);
 
             ScreenUtils.clear(
                     this.clearColor[0],
@@ -113,7 +114,7 @@ public abstract class BasicScene implements Screen {
     @Override
     public void dispose() {
         this.renderer.unloadAssets();
-        GameObjectsManager.getInstance().destructByScene(this);
+        ComponentsContext.getComponent(GameObjectsManager.class).destructByScene(this);
         this.disposed = true;
     }
 

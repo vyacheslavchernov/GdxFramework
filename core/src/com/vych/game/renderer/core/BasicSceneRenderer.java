@@ -1,12 +1,11 @@
 package com.vych.game.renderer.core;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.managers.resources.ResourcesManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class BasicSceneRenderer implements SceneRenderer {
@@ -14,7 +13,7 @@ public abstract class BasicSceneRenderer implements SceneRenderer {
     protected ResourcesManager resourcesManager;
 
     public BasicSceneRenderer() {
-        resourcesManager = ResourcesManager.getInstance();
+        resourcesManager = ComponentsContext.getComponent(ResourcesManager.class);
     }
 
     @Override
@@ -53,7 +52,10 @@ public abstract class BasicSceneRenderer implements SceneRenderer {
 
     @Override
     public void renderScene(Batch batch) {
-        List<GameObject> objectsToRender = GameObjectsManager.getInstance().getObjectsByRenderer(this);
+        List<GameObject> objectsToRender = ComponentsContext
+                .getComponent(GameObjectsManager.class)
+                .getObjectsByRenderer(this);
+
         for (GameObject obj : objectsToRender) {
             obj.instanceRender(batch);
         }

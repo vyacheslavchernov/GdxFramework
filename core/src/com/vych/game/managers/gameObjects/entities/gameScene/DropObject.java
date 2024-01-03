@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.resources.ResourcesManager;
@@ -34,12 +35,15 @@ public class DropObject extends BasicGameObject {
 
         this.bounds.y -= rainSpeed * Gdx.graphics.getDeltaTime();
 
-        GameObjectsManager gom = GameObjectsManager.getInstance();
+        GameObjectsManager gom = ComponentsContext.getComponent(GameObjectsManager.class);
         BucketObject bucketObject = (BucketObject) gom.getObjectsByClass(BucketObject.class).values().toArray()[0];
         GlobalHUDObject hud = (GlobalHUDObject) gom.getObjectsByClass(GlobalHUDObject.class).values().toArray()[0];
 
         if (this.bounds.overlaps(bucketObject.getBounds())) {
-            Sound dropSound = ResourcesManager.getInstance().getByName("dropSound", SoundResource.class).getContentCasted();
+            Sound dropSound = ComponentsContext
+                    .getComponent(ResourcesManager.class)
+                    .getByName("dropSound", SoundResource.class)
+                    .getContentCasted();
             dropSound.play();
             createNewDrop();
             hud.incrementScore();
@@ -68,12 +72,16 @@ public class DropObject extends BasicGameObject {
             Stash.add("rainSpeed", 200f);
         }
 
-        this.textureResource = ResourcesManager.getInstance().getByName("dropImage", TextureResource.class);
+        this.textureResource = ComponentsContext
+                .getComponent(ResourcesManager.class)
+                .getByName("dropImage", TextureResource.class);
     }
 
     private void createNewDrop() {
         try {
-            GameObjectsManager.getInstance().instantiateGameObject(DropObject.class, this.scene);
+            ComponentsContext
+                    .getComponent(GameObjectsManager.class)
+                    .instantiateGameObject(DropObject.class, this.scene);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);

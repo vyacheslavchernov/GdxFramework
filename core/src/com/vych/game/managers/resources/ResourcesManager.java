@@ -1,5 +1,6 @@
 package com.vych.game.managers.resources;
 
+import com.vych.game.context.Component;
 import com.vych.game.managers.resources.entities.FontResource;
 import com.vych.game.managers.resources.entities.MusicResource;
 import com.vych.game.managers.resources.entities.SoundResource;
@@ -19,16 +20,12 @@ import java.util.Map;
  * для управления ими, для их использования.
  * Является синглтоном за счёт чего игровые ресурсы доступны для использования в любой момент.
  */
+@Component
 public class ResourcesManager {
-    private static final ResourcesManager instance = new ResourcesManager();
     private Map<String, GameResource> resources;
 
     public ResourcesManager() {
         resources = new HashMap<>();
-    }
-
-    public static ResourcesManager getInstance() {
-        return instance;
     }
 
     public void loadResource(SceneAsset asset) {

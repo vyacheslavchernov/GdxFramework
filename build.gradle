@@ -63,7 +63,8 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-
         implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
+        implementation group: 'com.google.guava', name: 'guava', version: '33.0.0-jre'
+
     }
 }

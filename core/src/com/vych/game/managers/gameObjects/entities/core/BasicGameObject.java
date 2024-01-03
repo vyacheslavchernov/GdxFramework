@@ -2,6 +2,7 @@ package com.vych.game.managers.gameObjects.entities.core;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.resources.entities.TextureResource;
 import com.vych.game.scenes.core.BasicScene;
@@ -72,7 +73,7 @@ public abstract class BasicGameObject implements GameObject {
 
     @Override
     public void selfDestruct() {
-        GameObjectsManager.getInstance().destructById(this.id);
+        ComponentsContext.getComponent(GameObjectsManager.class).destructById(this.id);
     }
 
     /**

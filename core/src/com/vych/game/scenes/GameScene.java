@@ -1,6 +1,7 @@
 package com.vych.game.scenes;
 
 import com.badlogic.gdx.audio.Music;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.GameObjectsManager;
 import com.vych.game.managers.gameObjects.entities.gameScene.BucketObject;
 import com.vych.game.managers.gameObjects.entities.gameScene.DropObject;
@@ -21,12 +22,12 @@ public class GameScene extends BasicScene {
 
         clearColor = new float[]{0, 0, 0.2f, 1};
 
-        rainMusic = ResourcesManager.getInstance()
+        rainMusic = ComponentsContext.getComponent(ResourcesManager.class)
                 .getByName("rainMusic", MusicResource.class)
                 .getContentCasted();
         rainMusic.setLooping(true);
 
-        GameObjectsManager gameObjectsManager = GameObjectsManager.getInstance();
+        GameObjectsManager gameObjectsManager = ComponentsContext.getComponent(GameObjectsManager.class);
         try {
             gameObjectsManager.instantiateGameObject(BucketObject.class, this).setCamera(camera);
             gameObjectsManager.instantiateGameObject(DropObject.class, this);

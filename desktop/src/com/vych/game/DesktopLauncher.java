@@ -2,6 +2,7 @@ package com.vych.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.scenes.MenuScene;
 import com.vych.game.scenes.core.BasicScene;
 import com.vych.game.utils.PropertiesLoader;
@@ -9,7 +10,8 @@ import com.vych.game.utils.PropertiesLoader;
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
     public static void main(String[] arg) {
-        PropertiesLoader propertiesLoader = PropertiesLoader.getInstance();
+        ComponentsContext.loadContext();
+        PropertiesLoader propertiesLoader = ComponentsContext.getComponent(PropertiesLoader.class);
 
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(propertiesLoader.getInt("game.config.desktop.targetFps"));

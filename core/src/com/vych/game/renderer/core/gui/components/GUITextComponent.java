@@ -3,6 +3,7 @@ package com.vych.game.renderer.core.gui.components;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Align;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.FontResource;
 import com.vych.game.renderer.core.gui.BasicGUIComponent;
@@ -39,7 +40,10 @@ public class GUITextComponent extends BasicGUIComponent {
 
     @Override
     public void render(Batch batch) {
-        BitmapFont font = ResourcesManager.getInstance().getByName(fontName, FontResource.class).getContentCasted();
+        BitmapFont font = ComponentsContext
+                .getComponent(ResourcesManager.class)
+                .getByName(fontName, FontResource.class)
+                .getContentCasted();
         font.draw(batch, this.text, this.x, this.y, 0, this.halign, this.textWrap);
     }
 }

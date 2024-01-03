@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.resources.ResourcesManager;
 import com.vych.game.managers.resources.entities.FontResource;
 import com.vych.game.managers.resources.entities.TextureResource;
@@ -149,7 +150,10 @@ public class GUIButtonComponent extends BasicGUIComponent {
     @Override
     public void render(Batch batch) {
         batch.draw(getTextureByState().getContentCasted(), this.x, this.y, this.width, this.height);
-        BitmapFont font = ResourcesManager.getInstance().getByName(fontName, FontResource.class).getContentCasted();
+        BitmapFont font = ComponentsContext
+                .getComponent(ResourcesManager.class)
+                .getByName(fontName, FontResource.class)
+                .getContentCasted();
         font.draw(batch, this.text, this.x + width / 2, this.y + height / 2 + font.getXHeight() / 2, 0, Align.center, false);
     }
 

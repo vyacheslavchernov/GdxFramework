@@ -2,6 +2,7 @@ package com.vych.game.managers.gameObjects.entities.gameScene;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.gameObjects.entities.core.BasicGameObject;
 import com.vych.game.managers.scenes.SceneManager;
 import com.vych.game.renderer.core.gui.GUIHandler;
@@ -67,7 +68,7 @@ public class GlobalHUDObject extends BasicGameObject {
     public void incrementLooses() {
         this.looses++;
         if (this.looses == 3) {
-            SceneManager.getInstance().switchScene("startup", true);
+            ComponentsContext.getComponent(SceneManager.class).switchScene("startup", true);
         }
     }
 }

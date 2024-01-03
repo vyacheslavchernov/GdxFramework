@@ -2,8 +2,8 @@ package com.vych.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vych.game.context.ComponentsContext;
 import com.vych.game.managers.scenes.SceneManager;
-import com.vych.game.scenes.MenuScene;
 import com.vych.game.scenes.core.BasicScene;
 
 //TODO: По максимуму заюзать этот объект как синглтон.
@@ -11,6 +11,8 @@ import com.vych.game.scenes.core.BasicScene;
 //
 //TODO: Класс сейчас(не знаю как будет дальше) не используется ни для чего, кроме переключения сцен и инициализации приложения
 // Может сделать его вместо синглтона полем SceneManager?
+//
+//TODO: Это единственный синглтон в проекте. Его следует убрать
 public class SampleGame extends Game {
     private static SampleGame instance;
     private static Class<? extends BasicScene> startupScene;
@@ -35,7 +37,7 @@ public class SampleGame extends Game {
     public void create() {
         this.batch = new SpriteBatch();
 
-        SceneManager sm = SceneManager.getInstance();
+        SceneManager sm = ComponentsContext.getComponent(SceneManager.class);
         BasicScene startupScene = sm.loadScene("startup", SampleGame.startupScene);
         sm.setCurrentScene(startupScene);
         this.setScreen(startupScene);

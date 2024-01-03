@@ -1,6 +1,7 @@
 package com.vych.game.managers.gameObjects;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vych.game.context.Component;
 import com.vych.game.managers.gameObjects.entities.core.GameObject;
 import com.vych.game.renderer.core.SceneRenderer;
 import com.vych.game.scenes.core.BasicScene;
@@ -13,16 +14,12 @@ import java.util.*;
  * для их создания, удаления, поиска.
  * Является синглтоном за счёт чего игровые объекты доступны для использования в любой момент.
  */
+@Component
 public class GameObjectsManager {
-    private static final GameObjectsManager instance = new GameObjectsManager();
     private Map<Long, GameObject> gameObjects;
 
     public GameObjectsManager() {
         this.gameObjects = new HashMap<>();
-    }
-
-    public static GameObjectsManager getInstance() {
-        return instance;
     }
 
     /**
